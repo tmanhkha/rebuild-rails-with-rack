@@ -1,28 +1,21 @@
-$LOAD_PATH << '.'
-require 'rack'
-require 'tilt'
+$LOAD_PATH.unshift '.'
 
-module Frack
-  class Application
-    class << self
-      def call(env)
-        Rack::Response.new(render 'users/index')
-      end
+require 'config/application'
+require 'config/setup'
+require 'app/controllers/users_controller'
+require 'app/controllers/home_controller'
+require 'app/models/user'
+require 'app/models/email'
 
-      def render(view)
-        render_template('layouts/application') do
-          render_template(view)
-        end
-      end
-
-      def render_template(path, &block)
-        Tilt.new("app/views/#{path}.html.erb").render(&block)
-      end
-    end    
-  end
+use OTR::ActiveRecord::ConnectionManagement
+use Rack::Static, root: 'app/assets', urls: ['/images', '/javascripts', '/css']
+# use Rack::CommonLogger
+use Rack::ContentLength
+use Frack::Router do
+  match '/' => 'home#index'
+  match '/users' => 'users#index'
+  match '/contact' => 'users#contact'
+  match '/mail' => 'users#mail'
 end
 
-use Rack::Static, root: 'app/assets', urls: ['/images', '/javascripts', '/css']
-use Rack::CommonLogger
-use Rack::ContentLength
 run Frack::Application

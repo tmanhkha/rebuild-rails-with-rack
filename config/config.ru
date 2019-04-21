@@ -9,7 +9,6 @@ require 'app/models/email'
 
 use OTR::ActiveRecord::ConnectionManagement
 use Rack::Static, root: 'app/assets', urls: ['/images', '/javascripts', '/css']
-# use Rack::CommonLogger
 use Rack::ContentLength
 use Frack::Router do
   get '/' => 'home#index'

@@ -21,7 +21,7 @@ module Frack
       Hash[ %w(controller action).zip mapping.split('#') ]
     end
 
-    def match(route)
+    def get(route)
       self.routes.merge!(route)
     end
   end

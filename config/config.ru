@@ -12,10 +12,10 @@ use Rack::Static, root: 'app/assets', urls: ['/images', '/javascripts', '/css']
 # use Rack::CommonLogger
 use Rack::ContentLength
 use Frack::Router do
-  match '/' => 'home#index'
-  match '/users' => 'users#index'
-  match '/contact' => 'users#contact'
-  match '/mail' => 'users#mail'
+  get '/' => 'home#index'
+  get '/users' => 'users#index'
+  get '/contact' => 'users#contact'
+  get '/mail' => 'users#mail'
 end
 
 run Frack::Application
